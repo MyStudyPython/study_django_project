@@ -136,7 +136,7 @@ path=%path%;C:\Python
 点击 Download 进行下载，弹出页面让你注册或者登录，我们如果不想登录或注册的话，只需要点击 No thanks, just start my download 按钮即可。
 ![](https://img-blog.csdnimg.cn/26ee9b851abc4a48a6b2cbc240900819.png)
 
-详细安装教程:[Windows10 MYSQL Installer 安装（mysql-installer-community-5.7.19.0.msi） | 菜鸟教程](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
+详细安装教程:[MySQL安装教程（2023年，4月）](https://blog.csdn.net/hh2093531258/article/details/130340540?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-2-130340540-blog-115282713.235%5Ev38%5Epc_relevant_sort_base2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-2-130340540-blog-115282713.235%5Ev38%5Epc_relevant_sort_base2&utm_relevant_index=5)
 
 ## MongoDB数据库(这次没用上)
 ### 安装MongoDB
@@ -242,3 +242,119 @@ def 增加数据(表名,数据):
 
 增加数据('用户表',{"名字":"赵六","年龄":18})
 ```
+
+# vscode配置虚拟环境
+## 安装扩展插件
+![](https://img-blog.csdnimg.cn/img_convert/573e87ef8eee93e44479243efb7f04bd.png)
+## 打开我们的vscode选择一个文件夹创建django项目
+这里也可以直接在终端创建，但是为了不占用C盘空间和防止目录不好找到，先在D盘创建空白文件夹进入后再终端创建。创建项目命令：
+```sh
+django-admin startproject Blog
+```
+![](https://img-blog.csdnimg.cn/img_convert/bcf59456a6a6bcb9db2e672c74973599.png)
+
+## 为创建的项目创建虚拟环境
+这个时候需要打开创建的项目的根目录，而不是空白文件夹作为根目录，需要进入创建的项目文件夹，也就是Blog目录，可以终端直接cd进入也可以重新打开进入Blog文件夹，然后终端输入：
+```sh
+python -m venv venv
+```
+创建虚拟环境：
+
+![](https://img-blog.csdnimg.cn/img_convert/dd865ae35a2e55e75ce82c562fd6d6b4.png)
+
+这里注意会遇到一些问题，比如下图的：
+
+![](https://img-blog.csdnimg.cn/img_convert/aed647946698143551ec75881f1a7808.png)
+
+显示没有这个文件或目录，这样的问题解决办法是首先python默认路径改成anaconda3下面的：
+
+![](https://img-blog.csdnimg.cn/img_convert/068613fda4e67df401705df22a2258f3.png)
+
+然后再将报错中路径缺少的python.exe和pythonw.exe从anaconda3目录下复制到报错中nt目录下:
+![](https://img-blog.csdnimg.cn/img_convert/134b8cf0f59424761c67f4305e3b62ff.png)
+![](https://img-blog.csdnimg.cn/img_convert/f397339c1c894265e70be9dc0dd1d99e.png)
+然后重新输入命令python -m venv venv就成功创建了，完美解决！
+
+## 选择解释器
+一定注意要从创建的项目文件打卡，能避免低级错误。同时按下Shift+Ctrl+P搜索python解释器，然后选择我们创建的虚拟环境：
+![](https://img-blog.csdnimg.cn/img_convert/8c1d8f28df37419cc21b968768acb1c6.png)
+![](https://img-blog.csdnimg.cn/img_convert/ace4c3f33967d98612daf78e99ff590e.png)
+这里我出现了一个错误，默认的python路径和创建项目的python不一样而且版本不同，后面修改了默认路径就OK了
+
+## 调试使用创建的Django项目
+创建好虚拟环境后，新建终端就可以用虚拟环境运行了，如图：
+![](https://img-blog.csdnimg.cn/img_convert/606da47debf5ebc6590880b5ef45c3ab.png)
+
+但是此时我们需要重新下载一下django包，因为使用的虚拟环境：
+```sh
+pip install django
+```
+然后进行调试：
+
+![](https://img-blog.csdnimg.cn/img_convert/72c0851257b48eac3cd6f8dc818f8cbe.png)
+
+```sh
+python manage.py runserver
+```
+点击运行成功后终端显示：
+
+![](https://img-blog.csdnimg.cn/img_convert/1dcddb1e1d1094d7fab77b1827d0bf80.png)
+
+**报错信息翻译**
+您有18个未应用的迁移。在应用程序迁移之前，您的项目可能无法正常工作：管理员、身份验证、内容类型、会话。
+运行“python管理”。py migrate’来应用它们。
+
+**报错原因**
+有18个未应用的迁移。小伙伴们执行下面代码重建表结构即可！！！
+
+**解决方法**
+1. 先执行下面的代码，它可以让我们在修改Model后可以在不影响现有数据的前提下重建表结构：
+   ```py
+   python manage.py migrate
+   ```
+
+   ![](https://img-blog.csdnimg.cn/974357a46e7144aab7a78d410678d269.png)
+
+2. 再次启动服务器
+  ```py
+   python manage.py runserver
+  ```
+  ![](https://img-blog.csdnimg.cn/74d9a46ced284a34a8440844d575a435.png)
+
+
+## 项目文件解释
+![](https://img-blog.csdnimg.cn/img_convert/3ff578d60419e5679bc700cf254e1225.png)
+Bolg
+
+manage.py // 项目管理、启动、创建app、数据管理都在这里，不要动它
+
+Bolg
+
+__init__.py  // 初始化文件，一般情况下无须修改。
+
+settings.py // 项目的配置文件，很多操作也在这里（链接数据库）
+
+urls.py // url和python函数的对应关系都在这里，操作基本都在这里
+
+asgi.py // 异步接受网络请求的
+
+wsgi.py // 同步接受网络请求的
+
+## 创建APP（startapp）
+app不是应用，是功能的划分，创建app需要靠manage.py，终端输入：
+```sh
+python manage.py startapp application01
+```
+![](https://img-blog.csdnimg.cn/img_convert/3150ae2731b248613e101b83ab66b5ac.png)
+
+__init__.py：初始化文件，一般情况下无须修改。
+
+admin.py：后台管理的配置文件 , 后期我们的可以通过他管理我们的model和数据库。
+
+apps.py：django菜单文件。
+
+models.py：模型文件，用于创建模型和数据库表的映射关系，用于项目和数据库之间的数据处理。
+
+views.py：视图文件，用于实现我们具体的Web请求和返回响应。
+
+tests.py：测试文件。
