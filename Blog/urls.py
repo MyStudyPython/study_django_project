@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 # 引入app视图
 from application import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-     # 添加app的url
-    path('hello/', views.hello),
+    path("admin/", admin.site.urls),
+    # 添加app的url
+    # path('hello/', views.hello),
+    # 添加此项
+    path("article/", views.article_list),  # 展示文章
 ]
