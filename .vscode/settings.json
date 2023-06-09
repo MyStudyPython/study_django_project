@@ -8,7 +8,7 @@
     "**/__pycache__": true,
     "**/*.pyc": true,
     "**/*.pyo": true,
-    "**/venv": true
+    "**/.venv": true
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
