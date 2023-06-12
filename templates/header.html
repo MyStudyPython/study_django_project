@@ -13,6 +13,25 @@
           {% comment %} <a class="nav-link" href="#">文章</a> {% endcomment %}
           <!-- 改写了这里的 href -->
           <a class="nav-link" href="{% url 'list' %}">首页</a>
+
+          <!--增加以下内容-->
+          <!-- Django的 if 模板语句 -->
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ user.username }}</a>
+              <ul class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'logout' %}">退出登录</a>
+              </ul>
+            </li>
+
+          <!-- 如果用户未登录，则显示 “登录” -->
+          {% else %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">登录</a>
+          </li>
+          <!-- if 语句在这里结束 -->
+          {% endif %}
         </li>
       </ul>
     </div>

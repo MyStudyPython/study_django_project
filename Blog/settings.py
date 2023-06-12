@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 新增'application'代码，激活app
     "application",
+    # 新增'userprofile'代码，激活app
+    "userprofile",
 ]
 
 MIDDLEWARE = [
