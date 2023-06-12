@@ -62,3 +62,15 @@ def article_create(request):
         context = {"article_post_form": article_post_form}
         # 返回模板
         return render(request, "article/create.html", context)
+
+
+# 删文章
+def article_delete(request, id):
+    if request.method == "POST":
+        # 根据 id 获取需要删除的文章
+        article = Article.objects.get(id=id)
+        # 调用.delete()方法删除文章
+        article.delete()
+        return redirect("list")
+    else:
+        return HttpResponse("仅允许post请求")

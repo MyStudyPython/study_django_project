@@ -31,4 +31,6 @@ urlpatterns = [
     path("detail/<int:id>/", views.article_detail, name="detail"),  # 文章详情
     # 增加写文章
     path("create/", views.article_create, name="create"),
+    # 增加生删除文章
+    path("delete/<int:id>/", views.article_delete, name="delete"),
 ]

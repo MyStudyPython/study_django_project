@@ -12,6 +12,7 @@
  
 <!-- 定义放置文章标题的div容器 -->
 <div class="container">
+    <button class="btn btn-primary mt-2" onclick="location.href = '{% url "create"%}'">新增文章</button>
     {% for article in articles %}
     <div class="row mt-2">
         <!-- 文章内容 -->
@@ -25,10 +26,58 @@
                     <p class="card-text">{{ article.body|slice:'100' }}...</p>
                     {% comment %} <a href=""  class="card-link">阅读本文</a> {% endcomment %}
                     <a href="{% url 'detail' article.id %}"  class="card-link">阅读本文</a>
+
+                    &nbsp
+                    {% comment %} <a href="{% url "delete" article.id %}">删除文章</a>   {% endcomment %}
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#myModal">删除文章</a>
+
+                    <!-- 新增一个隐藏的表单 -->
+                    <form
+                        style="display:none;"
+                        id="safe_delete"
+                        action="{% url "delete" article.id %}"
+                        method="POST"
+                    >
+                        {% csrf_token %}
+                        <button type="submit">发送</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">确认删除</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    确认删除文章？
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirm_delete(event)">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 删除文章的函数
+        function confirm_delete(event) {
+            event.preventDefault();
+            document.getElementById("safe_delete").submit();
+        }
+    </script>
+
     {% endfor %}
 </div>
 {% endblock content %}
