@@ -12,7 +12,6 @@
  
 <!-- 定义放置文章标题的div容器 -->
 <div class="container">
-    <button class="btn btn-primary mt-2" onclick="location.href = '{% url "create"%}'">新增文章</button>
     {% for article in articles %}
     <div class="row mt-2">
         <!-- 文章内容 -->
@@ -30,7 +29,7 @@
                     &nbsp
                     {% comment %} <a href="{% url "delete" article.id %}">删除文章</a>   {% endcomment %}
                     <!-- 只有作者可以修改文章 -->
-                    {% comment %} {% if user == article.author %} {% endcomment %}
+                    {% if user == article.author %}
                     <a href="#" data-bs-toggle="modal" data-bs-target="#myModal">删除文章</a>
 
                     <!-- 新增一个隐藏的表单 -->
@@ -45,7 +44,7 @@
                     </form>
                     &nbsp
                     <a href="{% url "update" article.id %}">编辑文章</a>
-                    {% comment %} {% endif %} {% endcomment %}
+                    {% endif %}
                 </div>
             </div>
         </div>
