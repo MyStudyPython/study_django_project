@@ -39,4 +39,6 @@ urlpatterns = [
     # 增加用户管理
     path("login/", userprofile.views.user_login, name="login"),
     path("logout/", userprofile.views.user_logout, name="logout"),
+    # 增加注册管理
+    path("register/", userprofile.views.user_register, name="register"),
 ]
