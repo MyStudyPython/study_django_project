@@ -19,7 +19,7 @@
             <div class="col-12">
                 <a>作者：{{ article.author }}</a>
                 &nbsp
-                <a>{{ article.created|date:'Y-m-d H:i:s' }}</a>
+                <a>{{ article.createTime|date:'Y-m-d H:i:s' }}</a>
                 <!-- 只有作者可以修改文章 -->
                 {% if user == article.author %}
                 <a href="#" data-bs-toggle="modal" data-bs-target="#myModal">删除文章</a>
@@ -100,7 +100,7 @@
                     {{ comment.user }}
                 </strong> 于
                 <span style="color: green">
-                {{ comment.created|date:"Y-m-d H:i:s" }}
+                {{ comment.createTime|date:"Y-m-d H:i:s" }}
             </span> 时说：
             </p>
             <pre style="font-family: inherit; font-size: 1em;">

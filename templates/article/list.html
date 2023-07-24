@@ -12,6 +12,21 @@
  
 <!-- 定义放置文章标题的div容器 -->
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-3">
+            <li class="breadcrumb-item">
+                <a href="{% url 'list' %}">
+                    最新
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'list' %}?order=total_views">
+                    最热
+                </a>
+            </li>
+        </ol>
+    </nav>
+
     {% for article in articles %}
     <div class="row mt-2">
         <!-- 文章内容 -->
@@ -81,8 +96,18 @@
         </div>
     </div>
 
+    <script>
+        // 删除文章的函数
+        function confirm_delete(event) {
+            event.preventDefault();
+            document.getElementById("safe_delete").submit();
+        }
+    </script>
+
+    {% endfor %}
+
     <!-- 页码导航 -->
-    <div class="pagination row">
+    <div class="pagination row mt-3">
         <div class="m-auto">
             <span class="step-links">
                 <!-- 如果不是第一页，则显示上翻按钮 -->
@@ -110,16 +135,6 @@
             </span>
         </div>
     </div>
-
-    <script>
-        // 删除文章的函数
-        function confirm_delete(event) {
-            event.preventDefault();
-            document.getElementById("safe_delete").submit();
-        }
-    </script>
-
-    {% endfor %}
 </div>
 {% endblock content %}
 

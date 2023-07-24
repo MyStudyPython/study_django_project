@@ -23,20 +23,29 @@ from django.core.paginator import Paginator
 
 
 def article_list(request):
+    # 根据GET请求中查询条件
+    # 返回不同排序的对象数组
+    if request.GET.get("order") == "total_views":
+        article_list = Article.objects.all().order_by("-total_views")
+        order = "total_views"
+    else:
+        article_list = Article.objects.all().order_by("createTime")
+        order = "createTime"
+
     # 取出所有博客文学
     # articles = Article.objects.all()
     # 修改变量名称（articles -> article_list）
-    article_list = Article.objects.all()
+    # article_list = Article.objects.all()
 
-    # 每页显示 1 篇文章
-    paginator = Paginator(article_list, 1)
+    # 每页显示 5 篇文章
+    paginator = Paginator(article_list, 5)
     # 获取 url 中的页码
-    page = request.GET.get('page')
+    page = request.GET.get("page")
     # 将导航对象相应的页码内容返回给 articles
     articles = paginator.get_page(page)
 
     # 需要传递给模版
-    context = {"articles": articles}
+    context = {"articles": articles, "order": order}
     # render 函数：载入模版，并返回context对象
     return render(request, "article/list.html", context)
 
@@ -49,7 +58,7 @@ def article_detail(request, id):
     comments = Comment.objects.filter(article=id)
     # 需要传递给模板的对象
     # context = {"article": article}
-    context = {'article': article, 'comments': comments}
+    context = {"article": article, "comments": comments}
     # 载入模板，并返回context对象
     return render(request, "article/detail.html", context)
 
@@ -98,13 +107,13 @@ def article_delete(request, id):
     article = Article.objects.get(id=id)
     # 浏览量 +1
     article.total_views += 1
-    article.save(update_fields=['total_views'])
+    article.save(update_fields=["total_views"])
     # 取出文章评论
     comments = Comment.objects.filter(article=id)
     # 需要传递给模板的对象
-    context = {'article': article, 'comments': comments}
+    context = {"article": article, "comments": comments}
     # 载入模板，并返回context对象
-    return render(request, 'article/detail.html', context)
+    return render(request, "article/detail.html", context)
 
 
 # 更新文章
