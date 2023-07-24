@@ -6,7 +6,7 @@ from application.models import Article
 from .forms import CommentForm
  
 # 文章评论
-@login_required(login_url='/login/')
+@login_required(login_url='/login/') #用于限制访问特定视图函数的权限
 def post_comment(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     # 处理 POST 请求
