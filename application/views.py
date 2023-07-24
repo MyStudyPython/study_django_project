@@ -6,6 +6,9 @@
 # 引入redirect用于重定向地址
 from django.shortcuts import render, redirect
 
+# 导入数据模型ArticlePost
+from comment.models import Comment
+
 # Create your views here.
 # 导入数据模型Article
 from .models import Article
@@ -79,14 +82,26 @@ def article_create(request):
 
 # 删文章
 def article_delete(request, id):
-    if request.method == "POST":
-        # 根据 id 获取需要删除的文章
-        article = Article.objects.get(id=id)
-        # 调用.delete()方法删除文章
-        article.delete()
-        return redirect("list")
-    else:
-        return HttpResponse("仅允许post请求")
+    # if request.method == "POST":
+    #     # 根据 id 获取需要删除的文章
+    #     article = Article.objects.get(id=id)
+    #     # 调用.delete()方法删除文章
+    #     article.delete()
+    #     return redirect("list")
+    # else:
+    #     return HttpResponse("仅允许post请求")
+
+    # 取出相应的文章
+    article = Article.objects.get(id=id)
+    # 浏览量 +1
+    article.total_views += 1
+    article.save(update_fields=['total_views'])
+    # 取出文章评论
+    comments = Comment.objects.filter(article=id)
+    # 需要传递给模板的对象
+    context = {'article': article, 'comments': comments}
+    # 载入模板，并返回context对象
+    return render(request, 'article/detail.html', context)
 
 
 # 更新文章

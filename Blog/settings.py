@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "application",
     # 新增'userprofile'代码，激活app
     "userprofile",
+    'comment'
 ]
 
 MIDDLEWARE = [
