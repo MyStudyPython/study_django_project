@@ -36,6 +36,13 @@
                 &nbsp
                 <a href="{% url "update" article.id %}">编辑文章</a>
                 {% endif %}
+
+                <!-- 增加阅读量和图标 -->
+                <small class="col align-self-end" style="color: gray;">
+                    <span class="bi bi-eye">
+                        {{ article.total_views }}
+                    </span>
+                </small>
             </div>
         </div>
 {#        <br>#}

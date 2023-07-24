@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "application",
     # 新增'userprofile'代码，激活app
     "userprofile",
-    'comment'
+    # 新增'comment'代码，激活app
+    "comment",
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+# TIME_ZONE = "UTC"
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

@@ -22,6 +22,7 @@ from django.urls import path, re_path
 # 引入app视图
 import application.views
 import userprofile.views
+import comment.views
 
 app_name = "article"
 
@@ -41,4 +42,6 @@ urlpatterns = [
     path("logout/", userprofile.views.user_logout, name="logout"),
     # 增加注册管理
     path("register/", userprofile.views.user_register, name="register"),
+    # 增加评论管理
+    path('post-comment/<int:article_id>/', comment.views.post_comment, name='post_comment' ),
 ]
