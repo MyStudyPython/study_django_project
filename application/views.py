@@ -15,10 +15,23 @@ from django.http import HttpResponse
 # 引入刚才定义的ArticleForm表单类
 from .forms import ArticleForm
 
+# 引入分页模块
+from django.core.paginator import Paginator
+
 
 def article_list(request):
     # 取出所有博客文学
-    articles = Article.objects.all()
+    # articles = Article.objects.all()
+    # 修改变量名称（articles -> article_list）
+    article_list = Article.objects.all()
+
+    # 每页显示 1 篇文章
+    paginator = Paginator(article_list, 1)
+    # 获取 url 中的页码
+    page = request.GET.get('page')
+    # 将导航对象相应的页码内容返回给 articles
+    articles = paginator.get_page(page)
+
     # 需要传递给模版
     context = {"articles": articles}
     # render 函数：载入模版，并返回context对象
