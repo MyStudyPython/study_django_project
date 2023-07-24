@@ -2,6 +2,7 @@ from django.db import models
 
 # 导入内建的User模型
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # timezone 用于处理时间相关事务
 from django.utils import timezone
@@ -25,6 +26,12 @@ class Article(models.Model):
 
     # 文章创建时间，参数default = timezone.now 指定其在创建数据时将默认写入当前的时间
     createTime = models.DateTimeField(default=timezone.now)
+    # 增加浏览量字段
+    total_views = models.PositiveIntegerField(default=0)
 
     # 文章更新时间，参数auto_now = True 指定每次数据更新时自动写入当前时间
     updateTime = models.DateTimeField(auto_now=True)
+
+    # 获取文章地址
+    def get_absolute_url(self):
+        return reverse('detail', args=[self.id])
