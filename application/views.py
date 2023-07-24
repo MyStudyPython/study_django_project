@@ -21,32 +21,67 @@ from .forms import ArticleForm
 # 引入分页模块
 from django.core.paginator import Paginator
 
+# 导入查询功能的Q对象
+from django.db.models import Q
+
+
+# def article_list(request):
+#     # 根据GET请求中查询条件
+#     # 返回不同排序的对象数组
+#     if request.GET.get("order") == "total_views":
+#         article_list = Article.objects.all().order_by("-total_views")
+#         order = "total_views"
+#     else:
+#         article_list = Article.objects.all().order_by("createTime")
+#         order = "createTime"
+
+#     # 取出所有博客文学
+#     # articles = Article.objects.all()
+#     # 修改变量名称（articles -> article_list）
+#     # article_list = Article.objects.all()
+
+#     # 每页显示 5 篇文章
+#     paginator = Paginator(article_list, 5)
+#     # 获取 url 中的页码
+#     page = request.GET.get("page")
+#     # 将导航对象相应的页码内容返回给 articles
+#     articles = paginator.get_page(page)
+
+#     # 需要传递给模版
+#     context = {"articles": articles, "order": order}
+#     # render 函数：载入模版，并返回context对象
+#     return render(request, "article/list.html", context)
+
 
 def article_list(request):
     # 根据GET请求中查询条件
     # 返回不同排序的对象数组
-    if request.GET.get("order") == "total_views":
-        article_list = Article.objects.all().order_by("-total_views")
-        order = "total_views"
+    search = request.GET.get("search")
+    order = request.GET.get("order")
+    # 用户搜索逻辑
+    if search:
+        if order == "total_views":
+            # 用 Q对象 进行联合搜索
+            article_list = Article.objects.filter(Q(title__icontains=search) | Q(body__icontains=search)).order_by(
+                "-total_views"
+            )
+        else:
+            article_list = Article.objects.filter(Q(title__icontains=search) | Q(body__icontains=search))
     else:
-        article_list = Article.objects.all().order_by("createTime")
-        order = "createTime"
+        # 将 search 参数重置为空
+        search = ""
+        if order == "total_views":
+            article_list = Article.objects.all().order_by("-total_views")
+        else:
+            article_list = Article.objects.all()
 
-    # 取出所有博客文学
-    # articles = Article.objects.all()
-    # 修改变量名称（articles -> article_list）
-    # article_list = Article.objects.all()
-
-    # 每页显示 5 篇文章
     paginator = Paginator(article_list, 5)
-    # 获取 url 中的页码
     page = request.GET.get("page")
-    # 将导航对象相应的页码内容返回给 articles
     articles = paginator.get_page(page)
 
-    # 需要传递给模版
-    context = {"articles": articles, "order": order}
-    # render 函数：载入模版，并返回context对象
+    # 修改此行
+    context = {"articles": articles, "order": order, "search": search}
+
     return render(request, "article/list.html", context)
 
 
