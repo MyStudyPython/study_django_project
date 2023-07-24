@@ -32,6 +32,13 @@
                     {% if user == article.author %}
                     <a href="#" data-bs-toggle="modal" data-bs-target="#myModal">删除文章</a>
 
+                    <!-- 这里增加阅读量和图标 -->
+                    <small class="col align-self-end" style="color: gray;">
+                        <span class="bi bi-eye">
+                        {{ article.total_views }}
+                        </span>
+                    </small>
+
                     <!-- 新增一个隐藏的表单 -->
                     <form
                         style="display:none;"
