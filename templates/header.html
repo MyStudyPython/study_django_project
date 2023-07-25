@@ -21,7 +21,9 @@
             <!-- 当前路由路径中包含 detail 字符串 -->
             <a class="nav-link text-white-50" href="{% url 'list' %}">列表</a>
             {% else %}
-            <a class="nav-link text-white-50" href="{% url 'create' %}">创作</a>
+            {% if user.is_authenticated %}
+              <a class="nav-link text-white-50" href="{% url 'create' %}">创作</a>
+            {% endif %}
             <!-- if 语句在这里结束 -->
           {% endif %}
         {% endwith %}
