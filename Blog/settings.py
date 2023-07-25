@@ -25,9 +25,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-wi5(4cwq_peb4)(@19s%6_zxtin1vc$%#kwrm7&m)d-o@68_p="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+
+DEBUG = False
+
+ALLOWED_HOSTS = ["*"]
+
+# 静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, "collected_static")
 
 
 # Application definition
@@ -39,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",  # 解决浏览器跨域问题
     # 新增'application'代码，激活app
     "application",
     # 新增'userprofile'代码，激活app
@@ -46,6 +54,12 @@ INSTALLED_APPS = [
     # 新增'comment'代码，激活app
     "comment",
 ]
+
+# 解决跨域问题
+CORS_ORIGIN_ALLOW_ALL = True  # 解决浏览器跨域问题
+CORS_ALLOW_CREDENTIALS = True  # 解决浏览器跨域问题
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "None"  # Django4 特定解决浏览器跨域问题
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -127,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 # TIME_ZONE = "UTC"
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 
