@@ -1,5 +1,8 @@
-# study_django
+# study_django_project
 此项目前后端不分离
+
+- [ ] docker部署还未完成
+
 
 # 运行
 ### 配置环境.env: ctrl + shift + p 创建环境
